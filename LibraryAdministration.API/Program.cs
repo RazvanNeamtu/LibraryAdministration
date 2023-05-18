@@ -14,10 +14,8 @@ namespace LibraryAdministration.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-            IConfiguration configuration = new ConfigurationBuilder()
-                                            .AddJsonFile("appsettings.json")
-                                            .Build();
             // Add services to the container.
             builder.Services.AddDbContext<UsersContext>();
             builder.Services.RegisterApplication();
@@ -93,7 +91,6 @@ namespace LibraryAdministration.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
