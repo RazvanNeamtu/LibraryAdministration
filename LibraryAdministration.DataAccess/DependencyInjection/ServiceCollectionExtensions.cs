@@ -9,6 +9,7 @@ namespace LibraryAdministration.DataAccess.DependencyInjection
         public static void RegisterDataAccess(this IServiceCollection services)
         {
             services.AddTransient<IAuthRepository, AuthRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
     }
 }

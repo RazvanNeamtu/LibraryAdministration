@@ -10,10 +10,14 @@ namespace LibraryAdministration.DataAccess.Repositories
         {
             _userManager = userManager;
         }
+        public Task<IdentityUser?> GetUserByEmail(string email)
+        {
+            return _userManager.FindByEmailAsync(email);
+        }
 
         public async Task<bool> UserExistsByEmail(string email)
         {
-            var existingUser = await _userManager.FindByEmailAsync(email);
+            var existingUser = await GetUserByEmail(email);
             return existingUser != null;
         }
 
@@ -27,6 +31,11 @@ namespace LibraryAdministration.DataAccess.Repositories
             };
 
             return _userManager.CreateAsync(user, password);
+        }
+
+        public Task<bool> IsPasswordValid(IdentityUser user, string password)
+        {
+            return _userManager.CheckPasswordAsync(user, password);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace LibraryAdministration.Contracts.Requests.Authentication
         /// Password must be at least 6 characters.
         /// </summary>
         [Required(ErrorMessage = "Password is mandatory!")]
+        [MinLength(6)]
         public string Password { get; set; } = null!;
 
     }

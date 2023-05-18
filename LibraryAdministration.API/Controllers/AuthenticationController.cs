@@ -1,5 +1,6 @@
 ﻿using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.Contracts.Requests.Authentication;
+using LibraryAdministration.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAdministration.API.Controllers
@@ -24,6 +25,20 @@ namespace LibraryAdministration.API.Controllers
             (var isSuccess, var message) = await _service.RegisterUser(request.Username, request.Password, request.Email);
 
             return isSuccess ? StatusCode(StatusCodes.Status201Created, message) : (IActionResult)StatusCode(StatusCodes.Status417ExpectationFailed, message);
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] AuthenticationRequest request)
+        {
+            (var username, var email, var token) = await _service.Login(request.Email, request.Password);
+
+            return Ok(new AuthenticationResponse
+            {
+                Username = username,
+                Email = email,
+                Token = token
+            });
         }
     }
 }
