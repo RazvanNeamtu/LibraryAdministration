@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\LibraryAdministration.Application\LibraryAdministration.Application.csproj" />
     <ProjectReference Include="..\LibraryAdministration.Contracts\LibraryAdministration.Contracts.csproj" />
-    <ProjectReference Include="..\LibraryAdministration.DataAccess\LibraryAdministration.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,8 +6,8 @@ namespace LibraryAdministration.DataAccess.Repositories
 {
     public class UserRepository : Repository<IdentityUser>, IUserRepository
     {
-        private readonly UsersContext _usersContext;
-        public UserRepository(UsersContext usersContext) : base(usersContext)
+        private readonly ApplicationDbContext _usersContext;
+        public UserRepository(ApplicationDbContext usersContext) : base(usersContext)
         {
             _usersContext = usersContext;
         }

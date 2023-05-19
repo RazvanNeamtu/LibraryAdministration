@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LibraryAdministration.DataAccess.Migrations
 {
-    [DbContext(typeof(UsersContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230518113157_AddAuthenticationTables")]
     partial class AddAuthenticationTables
     {

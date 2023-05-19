@@ -17,7 +17,7 @@ namespace LibraryAdministration.API
             IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             // Add services to the container.
-            builder.Services.AddDbContext<UsersContext>();
+            builder.Services.AddDbContext<ApplicationDbContext>();
             builder.Services.RegisterApplication();
 
             builder.Services.AddControllers();
@@ -77,7 +77,7 @@ namespace LibraryAdministration.API
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             })
-                .AddEntityFrameworkStores<UsersContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
 
