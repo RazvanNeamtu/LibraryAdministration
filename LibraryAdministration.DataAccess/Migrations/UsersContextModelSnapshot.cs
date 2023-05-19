@@ -35,6 +35,58 @@ namespace LibraryAdministration.DataAccess.Migrations
                     b.HasIndex("BooksId");
 
                     b.ToTable("AuthorBook");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            BooksId = 1
+                        },
+                        new
+                        {
+                            AuthorId = 2,
+                            BooksId = 2
+                        },
+                        new
+                        {
+                            AuthorId = 2,
+                            BooksId = 3
+                        },
+                        new
+                        {
+                            AuthorId = 3,
+                            BooksId = 4
+                        },
+                        new
+                        {
+                            AuthorId = 3,
+                            BooksId = 5
+                        },
+                        new
+                        {
+                            AuthorId = 4,
+                            BooksId = 7
+                        },
+                        new
+                        {
+                            AuthorId = 5,
+                            BooksId = 8
+                        },
+                        new
+                        {
+                            AuthorId = 6,
+                            BooksId = 9
+                        },
+                        new
+                        {
+                            AuthorId = 7,
+                            BooksId = 9
+                        },
+                        new
+                        {
+                            AuthorId = 7,
+                            BooksId = 1
+                        });
                 });
 
             modelBuilder.Entity("BookRental", b =>
@@ -71,6 +123,50 @@ namespace LibraryAdministration.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FirstName = "Mircea",
+                            LastName = "Eliade"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FirstName = "Mihail",
+                            LastName = "Sadoveanu"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FirstName = "Liviu",
+                            LastName = "Rebreanu"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FirstName = "George",
+                            LastName = "Calinescu"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FirstName = "Camil",
+                            LastName = "Petrescu"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FirstName = "Mihai",
+                            LastName = "Eminescu"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FirstName = "Razvan",
+                            LastName = "Neamtu"
+                        });
                 });
 
             modelBuilder.Entity("LibraryAdministration.DataAccess.Entities.Book", b =>
@@ -97,6 +193,71 @@ namespace LibraryAdministration.DataAccess.Migrations
                     b.HasIndex("ImageId");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ImageId = 7,
+                            Quantity = 20,
+                            Title = "Maitreyi"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ImageId = 1,
+                            Quantity = 5,
+                            Title = "Baltagul"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImageId = 2,
+                            Quantity = 5,
+                            Title = "Dumbrava Minunata"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ImageId = 4,
+                            Quantity = 7,
+                            Title = "Hanul Ancutei"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ImageId = 5,
+                            Quantity = 10,
+                            Title = "Ion"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ImageId = 8,
+                            Quantity = 1,
+                            Title = "Padurea Spanzuratilor"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ImageId = 3,
+                            Quantity = 2,
+                            Title = "Enigma Otiliei"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ImageId = 9,
+                            Quantity = 2,
+                            Title = "Ultima noapte de dragoste, intaia noapte de razboi"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ImageId = 6,
+                            Quantity = 3,
+                            Title = "Luceafarul"
+                        });
                 });
 
             modelBuilder.Entity("LibraryAdministration.DataAccess.Entities.Image", b =>
@@ -118,6 +279,62 @@ namespace LibraryAdministration.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Images");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Baltagul.jpg",
+                            Path = "Images/Baltagul.jpg"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "DumbravaMinunata.jpg",
+                            Path = "Images/DumbravaMinunata.jpg"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "EnigmaOtiliei.jpg",
+                            Path = "Images/EnigmaOtiliei.jpg"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "HanulAncutei.jpg",
+                            Path = "Images/HanulAncutei.jpg"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Ion.jpg",
+                            Path = "Images/Ion.jpg"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Luceafarul.jpg",
+                            Path = "Images/Luceafarul.jpg"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Maitreyi.jpg",
+                            Path = "Images/Maitreyi.jpg"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "PadureaSpanzuratilor.jpg",
+                            Path = "Images/PadureaSpanzuratilor.jpg"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg",
+                            Path = "Images/UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg"
+                        });
                 });
 
             modelBuilder.Entity("LibraryAdministration.DataAccess.Entities.Rental", b =>
@@ -234,6 +451,24 @@ namespace LibraryAdministration.DataAccess.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b88e0b2b-8fa6-48cb-98ff-8f0a4481d363",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6483980d-65f6-4ef8-a274-a76d6122cdd3",
+                            Email = "admin@admin.ro",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.RO",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEChNlSvVTC5j0Lf7KuMN5BsSFExI5TyRbProHh5db+tyV6LJr5pQcLRwYt+KkaQB2Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "PKGPPFXQRYMHBRJQ4TSG4DA5EROZWGGZ",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>

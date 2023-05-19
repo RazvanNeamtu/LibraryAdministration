@@ -27,6 +27,88 @@ namespace LibraryAdministration.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.SeedData();
+        }
+    }
+
+    public static class SeedDataHelper
+    {
+        public static void SeedData(this ModelBuilder modelBuilder)
+        {
+            
+            #region users
+            var adminUser = new IdentityUser
+            {
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@admin.ro",
+                NormalizedEmail = "ADMIN@ADMIN.RO",
+                PasswordHash = "AQAAAAIAAYagAAAAEChNlSvVTC5j0Lf7KuMN5BsSFExI5TyRbProHh5db+tyV6LJr5pQcLRwYt+KkaQB2Q==",
+                SecurityStamp = "PKGPPFXQRYMHBRJQ4TSG4DA5EROZWGGZ",
+                ConcurrencyStamp = "6483980d-65f6-4ef8-a274-a76d6122cdd3"
+            };
+            #endregion
+
+            #region images
+            var image1 = new Image { Id = 1, Name = "Baltagul.jpg", Path = "Images/Baltagul.jpg" };
+            var image2 = new Image { Id = 2, Name = "DumbravaMinunata.jpg", Path = "Images/DumbravaMinunata.jpg" };
+            var image3 = new Image { Id = 3, Name = "EnigmaOtiliei.jpg", Path = "Images/EnigmaOtiliei.jpg" };
+            var image4 = new Image { Id = 4, Name = "HanulAncutei.jpg", Path = "Images/HanulAncutei.jpg" };
+            var image5 = new Image { Id = 5, Name = "Ion.jpg", Path = "Images/Ion.jpg" };
+            var image6 = new Image { Id = 6, Name = "Luceafarul.jpg", Path = "Images/Luceafarul.jpg" };
+            var image7 = new Image { Id = 7, Name = "Maitreyi.jpg", Path = "Images/Maitreyi.jpg" };
+            var image8 = new Image { Id = 8, Name = "PadureaSpanzuratilor.jpg", Path = "Images/PadureaSpanzuratilor.jpg" };
+            var image9 = new Image { Id = 9, Name = "UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg", Path = "Images/UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg" };
+
+            var imageList = new List<Image>() { image1, image2, image3, image4, image5, image6, image7, image8, image9 };
+            #endregion
+
+            #region books
+            var book1 = new Book { Id = 1, Title = "Maitreyi", Quantity = 20, ImageId = 7 };
+            var book2 = new Book { Id = 2, Title = "Baltagul", Quantity = 5, ImageId = 1 };
+            var book3 = new Book { Id = 3, Title = "Dumbrava Minunata", Quantity = 5, ImageId = 2 };
+            var book4 = new Book { Id = 4, Title = "Hanul Ancutei", Quantity = 7, ImageId = 4 };
+            var book5 = new Book { Id = 5, Title = "Ion", Quantity = 10, ImageId = 5 };
+            var book6 = new Book { Id = 6, Title = "Padurea Spanzuratilor", Quantity = 1, ImageId = 8 };
+            var book7 = new Book { Id = 7, Title = "Enigma Otiliei", Quantity = 2, ImageId = 3 };
+            var book8 = new Book { Id = 8, Title = "Ultima noapte de dragoste, intaia noapte de razboi", Quantity = 2, ImageId = 9 };
+            var book9 = new Book { Id = 9, Title = "Luceafarul", Quantity = 3, ImageId = 6 };
+
+            var bookList = new List<Book>() { book1, book2, book3, book4, book5, book6, book7, book8, book9 };
+            #endregion
+
+            #region authors
+            var author1 = new Author { Id = 1, FirstName = "Mircea", LastName = "Eliade" };
+            var author2 = new Author { Id = 2, FirstName = "Mihail", LastName = "Sadoveanu" };
+            var author3 = new Author { Id = 3, FirstName = "Liviu", LastName = "Rebreanu" };
+            var author4 = new Author { Id = 4, FirstName = "George", LastName = "Calinescu" };
+            var author5 = new Author { Id = 5, FirstName = "Camil", LastName = "Petrescu" };
+            var author6 = new Author { Id = 6, FirstName = "Mihai", LastName = "Eminescu" };
+            var author7 = new Author { Id = 7, FirstName = "Razvan", LastName = "Neamtu" };
+
+            var authorList = new List<Author>() { author1, author2, author3, author4, author5, author6, author7 };
+            #endregion
+
+            #region authorBook
+            var authorBooks = new List<object> {
+                new { AuthorId = author1.Id, BooksId = book1.Id },
+                new { AuthorId = author2.Id, BooksId = book2.Id },
+                new { AuthorId = author2.Id, BooksId = book3.Id },
+                new { AuthorId = author3.Id, BooksId = book4.Id },
+                new { AuthorId = author3.Id, BooksId = book5.Id },
+                new { AuthorId = author4.Id, BooksId = book7.Id },
+                new { AuthorId = author5.Id, BooksId = book8.Id },
+                new { AuthorId = author6.Id, BooksId = book9.Id },
+                new { AuthorId = author7.Id, BooksId = book9.Id },
+                new { AuthorId = author7.Id, BooksId = book1.Id },
+            };
+            #endregion
+
+            modelBuilder.Entity<IdentityUser>().HasData(adminUser);
+            modelBuilder.Entity<Image>().HasData(imageList);
+            modelBuilder.Entity<Book>().HasData(bookList);
+            modelBuilder.Entity<Author>().HasData(authorList);
+            modelBuilder.Entity<Book>().HasMany(p => p.Author).WithMany(m => m.Books).UsingEntity(j => j.HasData(authorBooks));
         }
     }
 }
