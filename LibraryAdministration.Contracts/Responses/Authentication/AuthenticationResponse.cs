@@ -1,4 +1,4 @@
-﻿namespace LibraryAdministration.Contracts.Responses
+﻿namespace LibraryAdministration.Contracts.Responses.Authentication
 {
     public class AuthenticationResponse
     {

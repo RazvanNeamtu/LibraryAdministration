@@ -1,6 +1,6 @@
 ﻿using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.Contracts.Requests.Authentication;
-using LibraryAdministration.Contracts.Responses;
+using LibraryAdministration.Contracts.Responses.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAdministration.API.Controllers
@@ -17,7 +17,7 @@ namespace LibraryAdministration.API.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
+        [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
         {
             if (request is null) throw new Exception(); //TODO: Error handling
@@ -28,7 +28,7 @@ namespace LibraryAdministration.API.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("Login")]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] AuthenticationRequest request)
         {
             (var username, var email, var token) = await _service.Login(request.Email, request.Password);
