@@ -10,6 +10,10 @@ namespace LibraryAdministration.DataAccess.DependencyInjection
         {
             services.AddTransient<IAuthRepository, AuthRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IImageRepository, ImageRepository>();
+            services.AddTransient<IRentalRepository, RentalRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
         }
     }
 }

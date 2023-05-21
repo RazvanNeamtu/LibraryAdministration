@@ -1,15 +1,15 @@
 ﻿using LibraryAdministration.DataAccess.Context;
+using LibraryAdministration.DataAccess.Entities;
 using LibraryAdministration.DataAccess.Repositories.Abstractions;
-using Microsoft.AspNetCore.Identity;
 
 namespace LibraryAdministration.DataAccess.Repositories
 {
-    public class UserRepository : Repository<IdentityUser>, IUserRepository
+    public class AuthorRepository : Repository<Author>, IAuthorRepository
     {
         private readonly ApplicationDbContext _applicationContext;
-        public UserRepository(ApplicationDbContext usersContext) : base(usersContext)
+        public AuthorRepository(ApplicationDbContext applicationContext) : base(applicationContext)
         {
-            _applicationContext = usersContext;
+            _applicationContext = applicationContext;
         }
 
         public Task Save()
@@ -17,9 +17,9 @@ namespace LibraryAdministration.DataAccess.Repositories
             return _applicationContext.SaveChangesAsync();
         }
 
-        public void Update(IdentityUser user)
+        public void Update(Author author)
         {
-            _applicationContext.Update(user);
+            _applicationContext.Update(author);
         }
     }
 }

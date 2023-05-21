@@ -103,12 +103,16 @@ namespace LibraryAdministration.DataAccess.Context
                 new { AuthorId = author7.Id, BooksId = book1.Id },
             };
             #endregion
-
             modelBuilder.Entity<IdentityUser>().HasData(adminUser);
             modelBuilder.Entity<Image>().HasData(imageList);
             modelBuilder.Entity<Book>().HasData(bookList);
             modelBuilder.Entity<Author>().HasData(authorList);
-            modelBuilder.Entity<Book>().HasMany(p => p.Author).WithMany(m => m.Books).UsingEntity(j => j.HasData(authorBooks));
+            modelBuilder.Entity<Book>().HasMany(p => p.Authors).WithMany(m => m.Books).UsingEntity(j => j.HasData(authorBooks));
+            modelBuilder.Entity<Book>().HasMany(p => p.Authors).WithMany(m => m.Books)
+                .UsingEntity("AuthorBook",
+                            l => l.HasOne(typeof(Author)).WithMany().HasForeignKey("AuthorId").HasPrincipalKey(nameof(Author.Id)),
+                             r => r.HasOne(typeof(Book)).WithMany().HasForeignKey("BooksId").HasPrincipalKey(nameof(Book.Id)),
+                             j => j.HasKey("AuthorId", "BooksId"));
         }
     }
 }

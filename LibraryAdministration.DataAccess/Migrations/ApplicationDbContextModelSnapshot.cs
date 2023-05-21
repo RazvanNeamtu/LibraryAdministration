@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryAdministration.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class UsersContextModelSnapshot : ModelSnapshot
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -178,7 +178,6 @@ namespace LibraryAdministration.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ImageId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
@@ -455,7 +454,7 @@ namespace LibraryAdministration.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b88e0b2b-8fa6-48cb-98ff-8f0a4481d363",
+                            Id = "7b774ec1-3386-4f1b-94de-d8fb63b85b32",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "6483980d-65f6-4ef8-a274-a76d6122cdd3",
                             Email = "admin@admin.ro",
@@ -571,9 +570,7 @@ namespace LibraryAdministration.DataAccess.Migrations
                 {
                     b.HasOne("LibraryAdministration.DataAccess.Entities.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });

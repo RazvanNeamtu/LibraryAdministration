@@ -41,7 +41,7 @@ namespace LibraryAdministration.Application.Services
             if(!isPasswordValid)
                 throw new Exception("Bad Credentials");
 
-            var user = _userRepository.GetFirstOrDefault(user => user.Email == email);
+            var user = await _userRepository.GetFirstOrDefault(user => user.Email == email);
             if (user is null)
                 throw new UnauthorizedAccessException();
 

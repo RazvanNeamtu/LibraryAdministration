@@ -1,3 +1,4 @@
+using LibraryAdministration.API.Mappings;
 using LibraryAdministration.Application.DependencyInjection;
 using LibraryAdministration.DataAccess.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -50,6 +51,8 @@ namespace LibraryAdministration.API
                     }
                 });
             });
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

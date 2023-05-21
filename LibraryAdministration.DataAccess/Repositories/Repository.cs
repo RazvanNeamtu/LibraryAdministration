@@ -19,17 +19,17 @@ namespace LibraryAdministration.DataAccess.Repositories
             dbSet.Add(entity);
         }
 
-        public T GetFirstOrDefault(System.Linq.Expressions.Expression<Func<T, bool>> filter)
+        public Task<T> GetFirstOrDefault(System.Linq.Expressions.Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
-            return dbSet.FirstOrDefault();
+            return query.FirstOrDefaultAsync();
         }
 
-        public List<T> GetAll()
+        public Task<List<T>> GetAll()
         {
             IQueryable<T> query = dbSet;
-            return query.ToList();
+            return query.ToListAsync();
         }
 
         public T GetById(int id)
