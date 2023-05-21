@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LibraryAdministration.Contracts.Requests.Authentication
 {
@@ -15,5 +16,18 @@ namespace LibraryAdministration.Contracts.Requests.Authentication
         [MinLength(6)]
         public string Password { get; set; } = null!;
 
+        //[AllowNull]
+        //public RegistrationUserInfoRequest UserInfo { get; set; } = null;
     }
+
+
+    //public class RegistrationUserInfoRequest
+    //{
+    //    [Required]
+    //    public string CNP { get; set; }
+    //    [Required]
+    //    public string LastName { get; set; }
+    //    [Required]
+    //    public string FirstName { get; set; }
+    //}
 }

@@ -3,7 +3,6 @@ using LibraryAdministration.Application.Models;
 using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.DataAccess.Entities;
 using LibraryAdministration.DataAccess.Repositories.Abstractions;
-using Microsoft.Extensions.Configuration;
 
 namespace LibraryAdministration.Application.Services
 {
@@ -11,24 +10,23 @@ namespace LibraryAdministration.Application.Services
     {
         private readonly IBookRepository _bookRepository;
         private readonly IAuthorRepository _authorRepository;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IFileService _fileService;
+        private readonly IAuthorService _authorService;
 
-        public BookService(IBookRepository bookRepository, IConfiguration configuration, IAuthorRepository authorRepository, IMapper mapper, IFileService fileService)
+        public BookService(IBookRepository bookRepository, IAuthorRepository authorRepository, IMapper mapper, IFileService fileService, IAuthorService authorService)
         {
             _bookRepository = bookRepository;
-            _configuration = configuration;
             _authorRepository = authorRepository;
             _mapper = mapper;
             _fileService = fileService;
-
+            _authorService = authorService;
         }
 
         public async Task DeleteById(int id)
         {
             var bookEntity = _bookRepository.GetById(id);
-            if (bookEntity is null) throw new Exception();
+            if (bookEntity is null) throw new Exception("Book not found"); //todo: resx? err handling?
             _bookRepository.Remove(bookEntity);
             await _bookRepository.Save();
         }
@@ -42,10 +40,10 @@ namespace LibraryAdministration.Application.Services
             return books;
         }
 
-        public async Task<BookDto> GetById(int id)
+        public BookDto GetById(int id)
         {
             var bookEntity = _bookRepository.GetById(id);
-            if (bookEntity is null) throw new Exception();
+            if (bookEntity is null) throw new Exception("Book not found");//todo: resx? err handling?
             var book = _mapper.Map<BookDto>(bookEntity);
             return book;
         }
@@ -53,22 +51,22 @@ namespace LibraryAdministration.Application.Services
         public async Task Insert(string title, int quantity, IEnumerable<Tuple<string, string>> authorsDto, byte[]? imageContent, string? imageName)
         {
             var bookEntity = await _bookRepository.GetFirstOrDefault(book => book.Title.ToUpper() == title.ToUpper());
-            if (bookEntity != null) throw new Exception("Book already exists");
+            if (bookEntity != null) throw new Exception("Book already exists");//todo: resx? err handling? //todo: maybe mask the error? 
 
-            var book = new Book { Title = title, Quantity = quantity };
+            bookEntity = new Book { Title = title, Quantity = quantity };
 
-            var authors = await RetrieveAuthors(authorsDto);
+            var authors = await _authorService.RetrieveAuthors(authorsDto);
 
-            book.Authors = new List<Author>();
-            book.Authors = book.Authors.Concat(authors).ToList();
+            bookEntity.Authors = new List<Author>();
+            bookEntity.Authors = bookEntity.Authors.Concat(authors).ToList();
 
             if (imageContent != null)
             {
-                var image = await _fileService.UploadImage(imageContent, imageName, book.Title);
-                book.ImageId = image.Id;
-                book.Image = image;
+                var image = await _fileService.UploadImage(imageContent, imageName, bookEntity.Title);
+                bookEntity.ImageId = image.Id;
+                bookEntity.Image = image;
             }
-            _bookRepository.Add(book);
+            _bookRepository.Add(bookEntity);
             await _bookRepository.Save();
         }
 
@@ -77,26 +75,6 @@ namespace LibraryAdministration.Application.Services
             //var bookEntity = _bookRepository.GetById(id);
             //if (bookEntity is null) throw new Exception();
             throw new NotImplementedException();
-        }
-
-        private async Task<List<Author>> RetrieveAuthors(IEnumerable<Tuple<string, string>> authors)
-        {
-            var authorList = new List<Author>();
-            foreach (var author in authors)
-            {
-                var existingAuthor = await _authorRepository.GetFirstOrDefault(a => a.FirstName.ToUpper() == author.Item1.ToUpper()
-                                                                                     && a.LastName.ToUpper() == author.Item2.ToUpper());
-
-                if (existingAuthor is null)
-                {
-                    existingAuthor = new Author { FirstName = author.Item1, LastName = author.Item2 };
-                    _authorRepository.Add(existingAuthor);
-                }
-
-                authorList.Add(existingAuthor);
-            }
-
-            return authorList;
         }
     }
 }

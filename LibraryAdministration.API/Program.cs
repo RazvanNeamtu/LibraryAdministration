@@ -1,3 +1,4 @@
+using LibraryAdministration.API.Controllers;
 using LibraryAdministration.API.Mappings;
 using LibraryAdministration.Application.DependencyInjection;
 using LibraryAdministration.DataAccess.Context;
@@ -50,6 +51,17 @@ namespace LibraryAdministration.API
                         Array.Empty<string>()
                     }
                 });
+
+                var documentedAssemblies = new[]
+                {
+                    typeof(BookController).Assembly
+                };
+
+                foreach (var assembly in documentedAssemblies)
+                {
+                    var filePath = Path.Join(AppContext.BaseDirectory, $"{assembly.GetName().Name}.xml");
+                    options.IncludeXmlComments(filePath);
+                }
             });
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));

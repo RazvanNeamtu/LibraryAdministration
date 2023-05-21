@@ -14,6 +14,7 @@ namespace LibraryAdministration.Application.DependencyInjection
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IAuthorService, AuthorService>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.RegisterDataAccess();
         }
