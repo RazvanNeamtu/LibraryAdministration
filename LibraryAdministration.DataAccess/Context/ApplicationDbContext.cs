@@ -50,15 +50,15 @@ namespace LibraryAdministration.DataAccess.Context
             #endregion
 
             #region images
-            var image1 = new Image { Id = 1, Name = "Baltagul.jpg", Path = "Images/Baltagul.jpg" };
-            var image2 = new Image { Id = 2, Name = "DumbravaMinunata.jpg", Path = "Images/DumbravaMinunata.jpg" };
-            var image3 = new Image { Id = 3, Name = "EnigmaOtiliei.jpg", Path = "Images/EnigmaOtiliei.jpg" };
-            var image4 = new Image { Id = 4, Name = "HanulAncutei.jpg", Path = "Images/HanulAncutei.jpg" };
-            var image5 = new Image { Id = 5, Name = "Ion.jpg", Path = "Images/Ion.jpg" };
-            var image6 = new Image { Id = 6, Name = "Luceafarul.jpg", Path = "Images/Luceafarul.jpg" };
-            var image7 = new Image { Id = 7, Name = "Maitreyi.jpg", Path = "Images/Maitreyi.jpg" };
-            var image8 = new Image { Id = 8, Name = "PadureaSpanzuratilor.jpg", Path = "Images/PadureaSpanzuratilor.jpg" };
-            var image9 = new Image { Id = 9, Name = "UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg", Path = "Images/UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg" };
+            var image1 = new Image { Id = 1, Name = "1Baltagul.jpg", OriginalName = "1.jpg", Path = "..\\..\\..\\..\\Images\\Baltagul.jpg" };
+            var image2 = new Image { Id = 2, Name = "2DumbravaMinunata.jpg", OriginalName = "2.jpg", Path = "..\\..\\..\\..\\Images\\DumbravaMinunata.jpg" };
+            var image3 = new Image { Id = 3, Name = "3EnigmaOtiliei.jpg", OriginalName = "3.jpg", Path = "..\\..\\..\\..\\Images\\EnigmaOtiliei.jpg" };
+            var image4 = new Image { Id = 4, Name = "4HanulAncutei.jpg", OriginalName = "4.jpg", Path = "..\\..\\..\\..\\Images\\HanulAncutei.jpg" };
+            var image5 = new Image { Id = 5, Name = "5Ion.jpg", OriginalName = "5.jpg", Path = "..\\..\\..\\..\\Images\\on.jpg" };
+            var image6 = new Image { Id = 6, Name = "6Luceafarul.jpg", OriginalName = "6.jpg", Path = "..\\..\\..\\..\\Images\\Luceafarul.jpg" };
+            var image7 = new Image { Id = 7, Name = "7Maitreyi.jpg", OriginalName = "7.jpg", Path = "..\\..\\..\\..\\Images\\Maitreyi.jpg" };
+            var image8 = new Image { Id = 8, Name = "8PadureaSpanzuratilor.jpg", OriginalName = "8.jpg", Path = "..\\..\\..\\..\\Images\\PadureaSpanzuratilor.jpg" };
+            var image9 = new Image { Id = 9, Name = "9UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg", OriginalName = "9.jpg", Path = "..\\..\\..\\..\\Images\\UltimaNoapteDeDragosteIntaiaNoapteDeRazboi.jpg" };
 
             var imageList = new List<Image>() { image1, image2, image3, image4, image5, image6, image7, image8, image9 };
             #endregion

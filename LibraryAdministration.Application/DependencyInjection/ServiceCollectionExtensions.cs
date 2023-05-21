@@ -13,6 +13,7 @@ namespace LibraryAdministration.Application.DependencyInjection
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IFileService, FileService>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.RegisterDataAccess();
         }

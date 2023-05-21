@@ -10,18 +10,19 @@ namespace LibraryAdministration.Application.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
-        private readonly IImageRepository _imageRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly IFileService _fileService;
 
-        public BookService(IBookRepository bookRepository, IConfiguration configuration, IImageRepository imageRepository, IAuthorRepository authorRepository, IMapper mapper)
+        public BookService(IBookRepository bookRepository, IConfiguration configuration, IAuthorRepository authorRepository, IMapper mapper, IFileService fileService)
         {
             _bookRepository = bookRepository;
             _configuration = configuration;
-            _imageRepository = imageRepository;
             _authorRepository = authorRepository;
             _mapper = mapper;
+            _fileService = fileService;
+
         }
 
         public async Task DeleteById(int id)
@@ -49,7 +50,7 @@ namespace LibraryAdministration.Application.Services
             return book;
         }
 
-        public async Task Insert(string title, int quantity, IEnumerable<Tuple<string, string>> authorsDto, byte[]? imageContent)
+        public async Task Insert(string title, int quantity, IEnumerable<Tuple<string, string>> authorsDto, byte[]? imageContent, string? imageName)
         {
             var bookEntity = await _bookRepository.GetFirstOrDefault(book => book.Title.ToUpper() == title.ToUpper());
             if (bookEntity != null) throw new Exception("Book already exists");
@@ -63,13 +64,10 @@ namespace LibraryAdministration.Application.Services
 
             if (imageContent != null)
             {
-                (var imageName, var imagePath) = SaveImageToDisk(imageContent);
-                var image = new Image { Name = imageName, Path = imagePath };
-                _imageRepository.Add(image);
+                var image = await _fileService.UploadImage(imageContent, imageName, book.Title);
                 book.ImageId = image.Id;
                 book.Image = image;
             }
-
             _bookRepository.Add(book);
             await _bookRepository.Save();
         }
@@ -99,20 +97,6 @@ namespace LibraryAdministration.Application.Services
             }
 
             return authorList;
-        }
-
-        private (string imageName, string imagePath) SaveImageToDisk(byte[] bytes)
-        {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string absolutePath = Path.Combine(baseDirectory, _configuration["Files:ImagesPath"]);
-            string directory = Path.GetDirectoryName(absolutePath);
-            Directory.CreateDirectory(directory);
-            File.WriteAllBytes(absolutePath, bytes);
-
-            string imageName = Path.GetFileName(absolutePath);
-            string imagePath = Path.Combine(directory, imageName);
-
-            return (imageName, imagePath);
         }
     }
 }

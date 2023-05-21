@@ -40,7 +40,7 @@ namespace LibraryAdministration.API.Controllers
         public async Task<IActionResult> Insert([FromBody] InsertBookRequest request)
         {
             var authors = request.Authors.Select(a =>  new Tuple<string,string>(a.AuthorFirstName, a.AuthorLastName));
-            await _bookService.Insert(request.Title, request.Quantity, authors, request.ImageContent);
+            await _bookService.Insert(request.Title, request.Quantity, authors, request.ImageContent, request.ImageName);
             return Ok();
         }
 

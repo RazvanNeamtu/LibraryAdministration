@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibraryAdministration.API.CustomValidation;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace LibraryAdministration.Contracts.Requests.Books
@@ -11,6 +12,8 @@ namespace LibraryAdministration.Contracts.Requests.Books
         public List<InsertBookRequestAuthor> Authors { get; set; }
         [AllowNull]
         public byte[]? ImageContent { get; set; }
+        [ImageNameRequiredWithDependency]
+        public string? ImageName { get; set; }
     }
 
     public class InsertBookRequestAuthor
