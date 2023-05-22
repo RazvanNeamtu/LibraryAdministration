@@ -15,22 +15,20 @@ namespace LibraryAdministration.DataAccess.Repositories
             return _userManager.FindByEmailAsync(email);
         }
 
+        public Task<IdentityUser?> GetUserByUsername(string username)
+        {
+            return _userManager.FindByNameAsync(username);
+        }
+
         public async Task<bool> UserExistsByEmail(string email)
         {
             var existingUser = await GetUserByEmail(email);
             return existingUser != null;
         }
 
-        public Task<IdentityResult> InsertUser(string username, string password, string email)
+        public Task<IdentityResult> InsertUser(IdentityUser user)
         {
-            var user = new IdentityUser
-            {
-                Email = email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = username,
-            };
-
-            return _userManager.CreateAsync(user, password);
+            return _userManager.CreateAsync(user);
         }
 
         public Task<bool> IsPasswordValid(IdentityUser user, string password)

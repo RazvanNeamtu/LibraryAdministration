@@ -1,10 +1,10 @@
 ﻿using LibraryAdministration.DataAccess.Context;
+using LibraryAdministration.DataAccess.Entities;
 using LibraryAdministration.DataAccess.Repositories.Abstractions;
-using Microsoft.AspNetCore.Identity;
 
 namespace LibraryAdministration.DataAccess.Repositories
 {
-    public class UserRepository : Repository<IdentityUser>, IUserRepository
+    public class UserRepository : Repository<UserInfo>, IUserRepository
     {
         private readonly ApplicationDbContext _applicationContext;
         public UserRepository(ApplicationDbContext usersContext) : base(usersContext)
@@ -17,7 +17,7 @@ namespace LibraryAdministration.DataAccess.Repositories
             return _applicationContext.SaveChangesAsync();
         }
 
-        public void Update(IdentityUser user)
+        public void Update(UserInfo user)
         {
             _applicationContext.Update(user);
         }

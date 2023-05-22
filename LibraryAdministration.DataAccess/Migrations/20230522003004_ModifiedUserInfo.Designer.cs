@@ -3,6 +3,7 @@ using System;
 using LibraryAdministration.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryAdministration.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230522003004_ModifiedUserInfo")]
+    partial class ModifiedUserInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -472,7 +475,7 @@ namespace LibraryAdministration.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f34cb864-7e22-41ca-9d7d-2e9279c791ec",
+                            Id = "c3d9b3b2-9321-460d-97aa-3bcd74e6ca23",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "6483980d-65f6-4ef8-a274-a76d6122cdd3",
                             Email = "admin@admin.ro",

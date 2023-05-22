@@ -2,6 +2,7 @@
 using LibraryAdministration.Contracts.Requests.Rentals;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace LibraryAdministration.API.Controllers
 {
@@ -24,7 +25,7 @@ namespace LibraryAdministration.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] InsertRentalRequest request)
         {
-
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok();
         }
     }

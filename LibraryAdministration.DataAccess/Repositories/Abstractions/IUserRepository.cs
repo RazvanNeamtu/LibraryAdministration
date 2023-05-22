@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LibraryAdministration.DataAccess.Entities;
 
 namespace LibraryAdministration.DataAccess.Repositories.Abstractions
 {
-    public interface IUserRepository : IRepository<IdentityUser>
+    public interface IUserRepository : IRepository<UserInfo>
     {
-        void Update(IdentityUser user);
+        void Update(UserInfo user);
         Task Save();
     }
 }

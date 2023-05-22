@@ -1,4 +1,6 @@
-﻿using LibraryAdministration.Application.Services.Abstractions;
+﻿using AutoMapper;
+using LibraryAdministration.Application.Models;
+using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.Contracts.Requests.Authentication;
 using LibraryAdministration.Contracts.Responses.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +12,16 @@ namespace LibraryAdministration.API.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthService _service;
+        private readonly IMapper _mapper;
 
-        public AuthenticationController(IAuthService service)
+        public AuthenticationController(IAuthService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         /// <summary>
-        /// Register new identity user
+        /// Register new user
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -28,7 +32,9 @@ namespace LibraryAdministration.API.Controllers
         {
             if (request is null) throw new Exception(); //TODO: Error handling
 
-            (var isSuccess, var message) = await _service.RegisterUser(request.Username, request.Password, request.Email); //TODO: create user info 
+            var userInfo = _mapper.Map<UserInfoDto>(request);
+
+            (var isSuccess, var message) = await _service.RegisterUser(request.Username, request.Password, request.Email, userInfo);
 
             return isSuccess ? StatusCode(StatusCodes.Status201Created, message) : (IActionResult)StatusCode(StatusCodes.Status417ExpectationFailed, message);
         }
@@ -44,7 +50,7 @@ namespace LibraryAdministration.API.Controllers
         {
             if (request is null) throw new Exception(); //TODO: Error handling
 
-            (var username, var email, var token) = await _service.Login(request.Email, request.Password);
+            (var username, var email, var token) = await _service.LoginByEmail(request.Email, request.Password);
 
             return Ok(new AuthenticationResponse
             {

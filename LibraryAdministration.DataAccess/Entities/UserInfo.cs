@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryAdministration.DataAccess.Entities
 {
@@ -12,5 +14,7 @@ namespace LibraryAdministration.DataAccess.Entities
         public string LastName { get; set; }
         [Required]
         public string FirstName { get; set; }
+        public IdentityUser? IdentityUser { get; set; }
+        public string? IdentityUserId { get; set; }
     }
 }
