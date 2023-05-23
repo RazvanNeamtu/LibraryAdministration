@@ -2,6 +2,7 @@
 using LibraryAdministration.DataAccess.Entities;
 using LibraryAdministration.DataAccess.Repositories.Abstractions;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace LibraryAdministration.Application.Services
 {
@@ -9,11 +10,13 @@ namespace LibraryAdministration.Application.Services
     {
         private readonly IImageRepository _imageRepository;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<FileService> _logger;
 
-        public FileService(IImageRepository imageRepository, IConfiguration configuration)
+        public FileService(IImageRepository imageRepository, IConfiguration configuration, ILogger<FileService> logger)
         {
             _imageRepository = imageRepository;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<Image> UploadImage(byte[] imageContent, string imageName, string entityTitle)
@@ -26,6 +29,7 @@ namespace LibraryAdministration.Application.Services
                 image = new Image { Name = newImageName, Path = imagePath, OriginalName = imageName };
 
                 _imageRepository.Add(image);
+                _logger.LogInformation($"Inserted image with id: {image.Id} ");
             }
             return image;
         }
@@ -39,6 +43,7 @@ namespace LibraryAdministration.Application.Services
             File.WriteAllBytes(absolutePath, bytes);
 
             string imagePath = Path.GetRelativePath(baseDirectory, absolutePath);
+            _logger.LogDebug($"Saved image on disk at path {imagePath}");
             return imagePath;
         }
 

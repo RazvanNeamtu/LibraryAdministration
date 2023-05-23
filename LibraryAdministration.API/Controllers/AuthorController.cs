@@ -5,6 +5,7 @@ using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.Contracts.Requests.Authors;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryAdministration.API.Controllers
 {
@@ -57,7 +58,7 @@ namespace LibraryAdministration.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] InsertAuthorRequest request)
         {
-            if (request is null) throw new Exception(); //TODO: Error handling
+            if (request is null) throw new ValidationException($"Request {typeof(InsertAuthorRequest)} is null");
             await _authorService.Insert(request.FirstName, request.LastName);
             return Ok();
         }
@@ -87,7 +88,7 @@ namespace LibraryAdministration.API.Controllers
         [Route("{id:int}/Update")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateAuthorRequest request)
         {
-            if (request is null) throw new Exception(); //TODO: Error handling
+            if (request is null) throw new ValidationException($"Request {typeof(UpdateAuthorRequest)} is null");
             await _authorService.Update(id, request.FirstName, request.LastName);
             return Ok();
         }

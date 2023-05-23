@@ -1,5 +1,6 @@
 using LibraryAdministration.API.Controllers;
 using LibraryAdministration.API.Mappings;
+using LibraryAdministration.API.Middlewares;
 using LibraryAdministration.Application.DependencyInjection;
 using LibraryAdministration.DataAccess.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,6 +23,7 @@ namespace LibraryAdministration.API
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>();
             builder.Services.RegisterApplication();
+            builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -108,6 +110,8 @@ namespace LibraryAdministration.API
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.MapControllers();
 

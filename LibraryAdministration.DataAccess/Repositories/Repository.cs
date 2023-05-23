@@ -19,7 +19,7 @@ namespace LibraryAdministration.DataAccess.Repositories
             dbSet.Add(entity);
         }
 
-        public Task<T> GetFirstOrDefault(System.Linq.Expressions.Expression<Func<T, bool>> filter)
+        public Task<T?> GetFirstOrDefault(System.Linq.Expressions.Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);

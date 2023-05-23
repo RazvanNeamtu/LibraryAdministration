@@ -6,7 +6,7 @@ namespace LibraryAdministration.DataAccess.Repositories.Abstractions
     {
         Task<List<T>> GetAll();
         T GetById(int id);
-        Task<T> GetFirstOrDefault(Expression<Func<T, bool>> filter);
+        Task<T?> GetFirstOrDefault(Expression<Func<T, bool>> filter);
         void Add(T entity);
         void Remove(T entity);
         void RemoveMultiple(IEnumerable<T> entities);

@@ -11,6 +11,11 @@ namespace LibraryAdministration.Application.Mappings
             CreateMap<Author, AuthorDto>();
             CreateMap<Book, BookDto>()
                 .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.Authors.ToList()));
+            CreateMap<Book, RentalBookDto>();
+            CreateMap<Rental, RentalDto>()
+                .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Books.ToList()));
+
+            CreateMap<UserInfo, UserInfoDto>();
         }
     }
 }

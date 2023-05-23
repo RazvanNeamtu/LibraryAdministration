@@ -5,6 +5,7 @@ using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.Contracts.Requests.Books;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryAdministration.API.Controllers
 {
@@ -57,7 +58,7 @@ namespace LibraryAdministration.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] InsertBookRequest request)
         {
-            if (request is null) throw new Exception(); //TODO: Error handling
+            if (request is null) throw new ValidationException($"Request {typeof(InsertBookRequest)} is null");
             var authors = request.Authors.Select(a =>  new Tuple<string,string>(a.AuthorFirstName, a.AuthorLastName));
             await _bookService.Insert(request.Title, request.Quantity, authors, request.ImageContent, request.ImageName);
             return Ok();
@@ -77,7 +78,7 @@ namespace LibraryAdministration.API.Controllers
             return Ok();
         }
 
-        //TODO: Fix this one
+        //TODO: implement update book
         //[HttpPut]
         //[Route("/{id}/Update")]
         //public async Task<IActionResult> Update(int id, [FromBody] UpdateBookRequest request)

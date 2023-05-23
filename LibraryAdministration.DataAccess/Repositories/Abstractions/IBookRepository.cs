@@ -7,5 +7,6 @@ namespace LibraryAdministration.DataAccess.Repositories.Abstractions
         void Update(Book book);
         Task Save();
         Task<List<Book>> GetAllFull();
+        Task<List<Book>> GetAllAvailableBulk(List<int> ids);
     }
 }

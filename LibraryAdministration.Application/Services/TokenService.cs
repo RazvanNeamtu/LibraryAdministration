@@ -1,6 +1,7 @@
 ﻿using LibraryAdministration.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,9 +13,12 @@ namespace LibraryAdministration.Application.Services
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
-        public TokenService(IConfiguration configuration)
+        private readonly ILogger<TokenService> _logger;
+
+        public TokenService(IConfiguration configuration, ILogger<TokenService> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         public string GetToken(IdentityUser user)
@@ -28,6 +32,8 @@ namespace LibraryAdministration.Application.Services
             );
 
             var tokenHandler = new JwtSecurityTokenHandler();
+
+            _logger.LogDebug($"Generated token for userId {user.Id}");
             return tokenHandler.WriteToken(token);
         }
 
@@ -56,9 +62,8 @@ namespace LibraryAdministration.Application.Services
                     new Claim(ClaimTypes.Email, user.Email)
                 };
             }
-            catch (Exception e)
+            catch
             {
-                //TODO: log
                 throw;
             }
         }

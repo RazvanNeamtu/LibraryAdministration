@@ -26,9 +26,9 @@ namespace LibraryAdministration.DataAccess.Repositories
             return existingUser != null;
         }
 
-        public Task<IdentityResult> InsertUser(IdentityUser user)
+        public Task<IdentityResult> InsertUser(IdentityUser user, string password)
         {
-            return _userManager.CreateAsync(user);
+            return _userManager.CreateAsync(user, password);
         }
 
         public Task<bool> IsPasswordValid(IdentityUser user, string password)

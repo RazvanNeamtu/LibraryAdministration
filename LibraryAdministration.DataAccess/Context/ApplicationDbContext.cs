@@ -49,6 +49,17 @@ namespace LibraryAdministration.DataAccess.Context
             };
             #endregion
 
+            #region userInfo
+            var userInfo = new UserInfo
+            {
+                Id = 1,
+                CNP = "1234567891234",
+                FirstName = "Admin",
+                LastName = "admin",
+                IdentityUserId = adminUser.Id
+            };
+            #endregion
+
             #region images
             var image1 = new Image { Id = 1, Name = "1Baltagul.jpg", OriginalName = "1.jpg", Path = "..\\..\\..\\..\\Images\\Baltagul.jpg" };
             var image2 = new Image { Id = 2, Name = "2DumbravaMinunata.jpg", OriginalName = "2.jpg", Path = "..\\..\\..\\..\\Images\\DumbravaMinunata.jpg" };
@@ -103,7 +114,9 @@ namespace LibraryAdministration.DataAccess.Context
                 new { AuthorId = author7.Id, BooksId = book1.Id },
             };
             #endregion
+
             modelBuilder.Entity<IdentityUser>().HasData(adminUser);
+            modelBuilder.Entity<UserInfo>().HasData(userInfo);
             modelBuilder.Entity<Image>().HasData(imageList);
             modelBuilder.Entity<Book>().HasData(bookList);
             modelBuilder.Entity<Author>().HasData(authorList);
@@ -113,6 +126,11 @@ namespace LibraryAdministration.DataAccess.Context
                             l => l.HasOne(typeof(Author)).WithMany().HasForeignKey("AuthorId").HasPrincipalKey(nameof(Author.Id)),
                              r => r.HasOne(typeof(Book)).WithMany().HasForeignKey("BooksId").HasPrincipalKey(nameof(Book.Id)),
                              j => j.HasKey("AuthorId", "BooksId"));
+            modelBuilder.Entity<Rental>().HasMany(p => p.Books).WithMany(m => m.Rentals)
+                .UsingEntity("BookRental",
+                l => l.HasOne(typeof(Book)).WithMany().HasForeignKey("BooksId").HasPrincipalKey(nameof(Book.Id)),
+                r => r.HasOne(typeof(Rental)).WithMany().HasForeignKey("RentalsId").HasPrincipalKey(nameof(Rental.Id)),
+                j => j.HasKey("BooksId", "RentalsId"));
         }
     }
 }

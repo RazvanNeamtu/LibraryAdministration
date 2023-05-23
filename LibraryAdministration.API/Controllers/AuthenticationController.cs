@@ -3,7 +3,9 @@ using LibraryAdministration.Application.Models;
 using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.Contracts.Requests.Authentication;
 using LibraryAdministration.Contracts.Responses.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryAdministration.API.Controllers
 {
@@ -26,11 +28,12 @@ namespace LibraryAdministration.API.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
+        [Authorize]
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
         {
-            if (request is null) throw new Exception(); //TODO: Error handling
+            if (request is null) throw new ValidationException($"Request { typeof(RegistrationRequest) } is null");
 
             var userInfo = _mapper.Map<UserInfoDto>(request);
 
@@ -48,7 +51,7 @@ namespace LibraryAdministration.API.Controllers
         [Route("Login")]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] AuthenticationRequest request)
         {
-            if (request is null) throw new Exception(); //TODO: Error handling
+            if (request is null) throw new ValidationException($"Request {typeof(AuthenticationRequest)} is null");
 
             (var username, var email, var token) = await _service.LoginByEmail(request.Email, request.Password);
 

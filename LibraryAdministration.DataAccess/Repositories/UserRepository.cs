@@ -21,5 +21,10 @@ namespace LibraryAdministration.DataAccess.Repositories
         {
             _applicationContext.Update(user);
         }
+
+        public Task<UserInfo?> GetUserInfoByIdentityUserId(string identityUserId)
+        {
+            return GetFirstOrDefault(u => u.IdentityUserId == identityUserId);
+        }
     }
 }

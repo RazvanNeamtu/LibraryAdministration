@@ -27,5 +27,10 @@ namespace LibraryAdministration.DataAccess.Repositories
         {
             _applicationContext.Update(book);
         }
+
+        public Task<List<Book>> GetAllAvailableBulk(List<int> ids)
+        {
+            return _applicationContext.Books.Where(b => ids.Contains(b.Id) && b.Quantity > 0).ToListAsync();
+        }
     }
 }

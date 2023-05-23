@@ -1,10 +1,8 @@
 ﻿namespace LibraryAdministration.API.ViewModels
 {
-    public class Book
+    public class RentalBook
     {
         public int BookId { get; set; }
         public string Title { get; set; }
-        public int Quantity { get; set; }
-        public List<Author> Authors { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using LibraryAdministration.Contracts.Requests.Books;
 using System.ComponentModel.DataAnnotations;
 
-namespace LibraryAdministration.API.CustomValidation
+namespace LibraryAdministration.Contracts.CustomValidation
 {
     public sealed class ImageNameRequiredWithDependencyAttribute : ValidationAttribute
     {

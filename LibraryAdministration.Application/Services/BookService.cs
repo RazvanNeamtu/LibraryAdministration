@@ -3,32 +3,34 @@ using LibraryAdministration.Application.Models;
 using LibraryAdministration.Application.Services.Abstractions;
 using LibraryAdministration.DataAccess.Entities;
 using LibraryAdministration.DataAccess.Repositories.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace LibraryAdministration.Application.Services
 {
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
-        private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
         private readonly IFileService _fileService;
         private readonly IAuthorService _authorService;
+        private readonly ILogger<BookService> _logger;
 
-        public BookService(IBookRepository bookRepository, IAuthorRepository authorRepository, IMapper mapper, IFileService fileService, IAuthorService authorService)
+        public BookService(IBookRepository bookRepository, IMapper mapper, IFileService fileService, IAuthorService authorService, ILogger<BookService> logger)
         {
             _bookRepository = bookRepository;
-            _authorRepository = authorRepository;
             _mapper = mapper;
             _fileService = fileService;
             _authorService = authorService;
+            _logger = logger;
         }
 
         public async Task DeleteById(int id)
         {
             var bookEntity = _bookRepository.GetById(id);
-            if (bookEntity is null) throw new Exception("Book not found"); //todo: resx? err handling?
+            if (bookEntity is null) throw new Exception("Book not found");
             _bookRepository.Remove(bookEntity);
             await _bookRepository.Save();
+            _logger.LogInformation($"Deleted author with id: {id} ");
         }
 
         public async Task<List<BookDto>> GetAll(bool includeAuthors)
@@ -43,7 +45,7 @@ namespace LibraryAdministration.Application.Services
         public BookDto GetById(int id)
         {
             var bookEntity = _bookRepository.GetById(id);
-            if (bookEntity is null) throw new Exception("Book not found");//todo: resx? err handling?
+            if (bookEntity is null) throw new Exception("Book not found");
             var book = _mapper.Map<BookDto>(bookEntity);
             return book;
         }
@@ -51,7 +53,7 @@ namespace LibraryAdministration.Application.Services
         public async Task Insert(string title, int quantity, IEnumerable<Tuple<string, string>> authorsDto, byte[]? imageContent, string? imageName)
         {
             var bookEntity = await _bookRepository.GetFirstOrDefault(book => book.Title.ToUpper() == title.ToUpper());
-            if (bookEntity != null) throw new Exception("Book already exists");//todo: resx? err handling? //todo: maybe mask the error? 
+            if (bookEntity != null) throw new Exception("Book already exists");
 
             bookEntity = new Book { Title = title, Quantity = quantity };
 
@@ -68,12 +70,12 @@ namespace LibraryAdministration.Application.Services
             }
             _bookRepository.Add(bookEntity);
             await _bookRepository.Save();
+
+            _logger.LogInformation($"Inserted book with id: {bookEntity.Id} ");
         }
 
         public Task Update(int id, string title, int quantity, string authorFirstName, string authorLastName, byte[]? imageContent)
         {
-            //var bookEntity = _bookRepository.GetById(id);
-            //if (bookEntity is null) throw new Exception();
             throw new NotImplementedException();
         }
     }

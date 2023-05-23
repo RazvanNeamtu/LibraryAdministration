@@ -6,5 +6,6 @@ namespace LibraryAdministration.DataAccess.Repositories.Abstractions
     {
         void Update(UserInfo user);
         Task Save();
+        Task<UserInfo?> GetUserInfoByIdentityUserId(string identityUserId);
     }
 }
